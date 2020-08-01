@@ -1,6 +1,25 @@
-import { LOAD_MEMBER } from "./detailedTypes";
+import {
+  FETCH_ONE_MEMBER_REQUEST,
+  FETCH_ONE_MEMBER_SUCCESS,
+  FETCH_ONE_MEMBER_FAILURE,
+} from "./detailedTypes";
 
-export const loadMember = (member) => ({
-  type: LOAD_MEMBER,
-  payload: member,
-});
+export const fetchOneMemberRequest = () => {
+  return {
+    type: FETCH_ONE_MEMBER_REQUEST,
+  };
+};
+
+export const fetchOneMemberSuccess = (member) => {
+  return {
+    type: FETCH_ONE_MEMBER_SUCCESS,
+    payload: member,
+  };
+};
+
+export const fetchOneMemberFailure = (error) => {
+  return {
+    type: FETCH_ONE_MEMBER_FAILURE,
+    payload: error,
+  };
+};

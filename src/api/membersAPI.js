@@ -12,3 +12,14 @@ export const fetchMembers = async () => {
     console.error(error);
   }
 };
+
+export const fetchOneMember = async (id) => {
+  try {
+    const res = await axios.get(`${url}/members/${id}.json`, {
+      headers: { "X-API-Key": token },
+    });
+    return res.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
