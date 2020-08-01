@@ -11,9 +11,8 @@ function App() {
     <>
       <Provider store={store}>
         <Router>
-          <Navbar />
           <Route path='/' exact component={MembersView} />
-          <Route path='/id' component={DetailedView} />
+          <Route path='/id/:id' component={DetailedView} />
         </Router>
       </Provider>
     </>

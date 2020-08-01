@@ -14,7 +14,6 @@ import {
   fetchMembersFailure,
   fetchMembersRequest,
   fetchMembersSuccess,
-  loadMember,
 } from "../../redux";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
@@ -22,6 +21,7 @@ import { useHistory } from "react-router-dom";
 const MembersGrid = () => {
   const dispatch = useDispatch();
   const members = useSelector((state) => state.members);
+  console.log(members.members);
   const history = useHistory();
   // const [showMembers, setShowMembers] = useState([]);
 
@@ -51,9 +51,8 @@ const MembersGrid = () => {
     return <LinearProgress color='secondary' />;
   }
 
-  const onClick = (index) => {
-    dispatch(loadMember(members.members[index]));
-    history.push(`/id/${index}`);
+  const onClick = (id) => {
+    history.push(`/id/${id}`);
   };
 
   return (
@@ -71,13 +70,13 @@ const MembersGrid = () => {
         </Select>
       </FormControl>
       <Grid>
-        {members.members.map((member, index) => {
+        {members.members.map((member) => {
           return (
             <MemberCard
               first_name={member.first_name}
               last_name={member.last_name}
               onClick={onClick}
-              index={index}
+              id={member.id}
             />
           );
         })}

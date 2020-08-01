@@ -1,9 +1,10 @@
 import React from "react";
-import { Members } from "../components";
+import { Members, Navbar } from "../components";
 
 const MembersView = () => {
   return (
     <>
+      <Navbar />
       <Members />
     </>
   );
