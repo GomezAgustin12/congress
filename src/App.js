@@ -2,7 +2,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import "./App.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { MembersView } from "./views";
+import { MembersView, DetailedView } from "./views";
 import { Navbar } from "./components";
 import store from "./redux/store";
 
@@ -13,6 +13,7 @@ function App() {
         <Router>
           <Navbar />
           <Route path='/' exact component={MembersView} />
+          <Route path='/id' component={DetailedView} />
         </Router>
       </Provider>
     </>

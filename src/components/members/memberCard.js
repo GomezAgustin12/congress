@@ -1,40 +1,23 @@
 import React from "react";
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  CardActions,
-  IconButton,
-  Typography,
-} from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { Card, CardHeader, IconButton } from "@material-ui/core";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 
-const MemberCard = () => {
+const MemberCard = ({ first_name, last_name, onClick, index }) => {
+  const title = `${first_name} ${last_name}`;
+
   return (
-    <Card className='root'>
-      <CardHeader
-        action={
-          <IconButton aria-label='settings'>
-            <ArrowForwardIosIcon />
-          </IconButton>
-        }
-        title='Shrimp and Chorizo Paella'
-        subheader='September 14, 2016'
-      />
-      <CardContent>
-        <Typography variant='body2' color='textSecondary' component='p'>
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <IconButton>
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-    </Card>
+    <>
+      <Card className='root'>
+        <CardHeader
+          action={
+            <IconButton onClick={() => onClick(index)} aria-label='settings'>
+              <ArrowForwardIosIcon />
+            </IconButton>
+          }
+          title={title}
+        />
+      </Card>
+    </>
   );
 };
 

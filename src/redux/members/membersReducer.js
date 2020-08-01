@@ -6,7 +6,7 @@ import {
 
 const initialState = {
   loading: false,
-  member: {},
+  members: [{}],
   error: false,
 };
 
@@ -21,7 +21,7 @@ const reducer = (state = initialState, action) => {
     case FETCH_MEMBERS_SUCCESS:
       return {
         loading: false,
-        member: action.payload || initialState.member,
+        members: action.payload || initialState.member,
       };
     case FETCH_MEMBERS_FAILURE:
       return {

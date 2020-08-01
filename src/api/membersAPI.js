@@ -7,7 +7,6 @@ export const fetchMembers = async () => {
     const res = await axios.get(`${url}/116/senate/members.json`, {
       headers: { "X-API-Key": token },
     });
-    console.log(res);
     return res.data;
   } catch (error) {
     console.error(error);
