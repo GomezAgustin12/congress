@@ -4,7 +4,7 @@ import { Members, Navbar } from "../components";
 const MembersView = () => {
   return (
     <>
-      <Navbar />
+      <Navbar title='Member List' />
       <Members />
     </>
   );

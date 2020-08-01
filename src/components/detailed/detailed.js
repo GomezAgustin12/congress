@@ -7,7 +7,8 @@ import {
   fetchOneMemberRequest,
 } from "../../redux";
 import { fetchOneMember } from "../../api";
-import { LinearProgress } from "@material-ui/core";
+import { LinearProgress, Container } from "@material-ui/core";
+
 import { Navbar } from "../index";
 
 const Detailed = () => {
@@ -36,15 +37,15 @@ const Detailed = () => {
     <>
       <Navbar
         title={`${detailed.member["First Name"]} ${detailed.member["Middle Name"]} ${detailed.member["Last Name"]}`}
+        view='detailed'
       />
-      {keys.map((key) => {
-        console.log(key);
-        return (
+      <Container>
+        {keys.map((key) => (
           <p>
             {key}: {detailed.member[key]}
           </p>
-        );
-      })}
+        ))}
+      </Container>
     </>
   );
 };
