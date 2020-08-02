@@ -6,6 +6,7 @@ import {
   TextField,
   IconButton,
   Container,
+  Switch,
 } from "@material-ui/core";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
@@ -18,6 +19,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "./style.scss";
+import FieldFilter from "./fieldFilter";
 
 const MembersGrid = () => {
   const dispatch = useDispatch();
@@ -26,21 +28,10 @@ const MembersGrid = () => {
   const [showMembers, setShowMembers] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [searchMembers, setSearchMembers] = useState([]);
+  const [filterFlag, setFilterFlag] = useState(false);
 
   useEffect(() => {
-    try {
-      dispatch(fetchMembersRequest());
-      fetchMembers().then((payload) => {
-        const dataMembers = payload.results[0].members;
-        dispatch(fetchMembersSuccess(dataMembers));
-        // const membersParties = dataMembers.map((member) => member.party);
-        // const uniqueParties = [...new Set(membersParties)];
-        // console.log(uniqueParties);
-      });
-    } catch (error) {
-      console.error(error);
-      dispatch(fetchMembersFailure());
-    }
+    dispatch(fetchMembersRequest());
   }, []);
 
   useEffect(() => {
@@ -61,14 +52,35 @@ const MembersGrid = () => {
     return pageElements;
   };
 
+  const filterSwitch = () => {
+    setFilterFlag(!filterFlag);
+  };
+
+  /**
+   * @description
+   * @name handleAdvanceSearch
+   * @returns
+   * @param {String} value User Input
+   * @param {String} key Member obj atribute
+   */
+  const handleAdvanceSearch = (value, key) => {
+    const searchElements = members.filter((member) =>
+      String(member[key]).includes(value)
+    );
+    setSearchMembers(searchElements);
+    const elements = pagination(searchElements, 7, currentPage);
+    setShowMembers(elements);
+  };
+
   const onChange = async ({ target }) => {
     const searchElements = members.filter((member) => {
       const keys = Object.keys(member);
-      const aux = keys.filter((key) => member[key]);
-      const aux3 = aux.filter((aux2) =>
-        String(member[aux2]).includes(target.value)
+      const nonEmptyKeys = keys.filter((key) => member[key]);
+
+      const foundKeys = nonEmptyKeys.filter((key) =>
+        String(member[key]).includes(target.value)
       );
-      if (aux3.length) {
+      if (foundKeys.length) {
         return member;
       }
     });
@@ -84,14 +96,25 @@ const MembersGrid = () => {
   return (
     <>
       {loading && <LinearProgress color='secondary' />}
-      <Container>
-        <TextField
-          variant='outlined'
-          margin='normal'
-          label='Search'
-          autoFocus
-          onChange={onChange}
-        />
+      <Container className='listContainer'>
+        <h1>Member List</h1>
+
+        <div className='filterArea'>
+          <div>
+            {filterFlag === false && (
+              <TextField
+                variant='outlined'
+                margin='normal'
+                label='Search'
+                autoFocus
+                onChange={onChange}
+              />
+            )}
+            {filterFlag && <FieldFilter onChange={handleAdvanceSearch} />}
+          </div>
+
+          <Switch onChange={filterSwitch} className='switchButton' />
+        </div>
         <Grid>
           {showMembers.map((member) => {
             return (

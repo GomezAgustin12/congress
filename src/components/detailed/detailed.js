@@ -8,6 +8,8 @@ import {
 } from "../../redux";
 import { fetchOneMember } from "../../api";
 import { LinearProgress, Container } from "@material-ui/core";
+import "./style.scss";
+import { BackButton } from "../index";
 
 const Detailed = () => {
   const { id } = useParams();
@@ -32,15 +34,17 @@ const Detailed = () => {
 
   const keys = Object.keys(detailed.member);
   return (
-    <>
-      <Container>
+    <Container>
+      <BackButton />
+      <div className='table'>
         {keys.map((key) => (
-          <p>
-            {key}: {detailed.member[key]}
-          </p>
+          <div className='tableElement'>
+            <div className='elementLabel'>{key}</div>
+            <div>{String(detailed.member[key])}</div>
+          </div>
         ))}
-      </Container>
-    </>
+      </div>
+    </Container>
   );
 };
 

@@ -1,12 +1,14 @@
 import React from "react";
-import { AppBar, Toolbar, Typography } from "@material-ui/core";
+import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
 
 const Header = () => (
   <AppBar position='static' className='root'>
     <Toolbar>
-      <Typography variant='h6' className='title'>
-        APP NAME
-      </Typography>
+      <Button href='/' color='inherit'>
+        <Typography variant='h6' className='title'>
+          CONGRESS APP
+        </Typography>
+      </Button>
     </Toolbar>
   </AppBar>
 );

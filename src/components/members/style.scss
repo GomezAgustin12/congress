@@ -2,3 +2,41 @@
   display: flex;
   justify-content: center;
 }
+.filterArea {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 15px;
+  .switchButton {
+    margin: 20px 20px 20px 0;
+  }
+  * > {
+    flex: 1;
+  }
+}
+.listContainer {
+  display: flex;
+  justify-content: center;
+  h1 {
+    margin: auto;
+  }
+}
+.select {
+  min-width: 200px;
+}
+
+.advancedFilter {
+  display: flex;
+  align-items: center;
+  .textField {
+    margin-left: 10px;
+    width: 200px;
+  }
+  @media (max-width: 768px) {
+    flex-direction: column;
+    .textField {
+      margin-top: 5px;
+      margin-left: 0;
+    }
+  }
+}
