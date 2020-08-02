@@ -21,10 +21,11 @@ import "./style.scss";
 
 const MembersGrid = () => {
   const dispatch = useDispatch();
-  const members = useSelector((state) => state.members);
+  const { members, loading } = useSelector((state) => state.members);
   const history = useHistory();
   const [showMembers, setShowMembers] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [searchMembers, setSearchMembers] = useState([]);
 
   useEffect(() => {
     try {
@@ -32,9 +33,9 @@ const MembersGrid = () => {
       fetchMembers().then((payload) => {
         const dataMembers = payload.results[0].members;
         dispatch(fetchMembersSuccess(dataMembers));
-        const membersParties = dataMembers.map((member) => member.party);
-        const uniqueParties = [...new Set(membersParties)];
-        console.log(uniqueParties);
+        // const membersParties = dataMembers.map((member) => member.party);
+        // const uniqueParties = [...new Set(membersParties)];
+        // console.log(uniqueParties);
       });
     } catch (error) {
       console.error(error);
@@ -43,20 +44,38 @@ const MembersGrid = () => {
   }, []);
 
   useEffect(() => {
-    const elements = pagination(members.members, 6, currentPage);
-    setShowMembers(elements);
-  }, [members, currentPage]);
+    const elements = pagination(searchMembers, 7, currentPage);
+    if (searchMembers.length) setShowMembers(elements);
+  }, [currentPage]);
 
-  const pagination = (array, elements = 6, page = 0) => {
+  useEffect(() => {
+    setSearchMembers(members);
+    const elements = pagination(members, 7, currentPage);
+    setShowMembers(elements);
+  }, [members]);
+
+  const pagination = (array, elements, page = 0) => {
     const firstElement = elements * page;
     const lastElement = elements + elements * page;
     const pageElements = array.slice(firstElement, lastElement);
     return pageElements;
   };
 
-  if (members.loading) {
-    return <LinearProgress color='secondary' />;
-  }
+  const onChange = async ({ target }) => {
+    const searchElements = members.filter((member) => {
+      const keys = Object.keys(member);
+      const aux = keys.filter((key) => member[key]);
+      const aux3 = aux.filter((aux2) =>
+        String(member[aux2]).includes(target.value)
+      );
+      if (aux3.length) {
+        return member;
+      }
+    });
+    setSearchMembers(searchElements);
+    const elements = pagination(searchElements, 7, currentPage);
+    setShowMembers(elements);
+  };
 
   const onClick = (id) => {
     history.push(`/id/${id}`);
@@ -64,12 +83,14 @@ const MembersGrid = () => {
 
   return (
     <>
+      {loading && <LinearProgress color='secondary' />}
       <Container>
         <TextField
           variant='outlined'
           margin='normal'
           label='Search'
           autoFocus
+          onChange={onChange}
         />
         <Grid>
           {showMembers.map((member) => {
@@ -85,12 +106,12 @@ const MembersGrid = () => {
           })}
         </Grid>
         <div className='paginationButtons'>
-          {currentPage != 0 && (
+          {currentPage !== 0 && (
             <IconButton onClick={() => setCurrentPage(currentPage - 1)}>
               <ArrowBackIosIcon />
             </IconButton>
           )}
-          {currentPage < Math.ceil(members.members.length / 6) - 1 && (
+          {currentPage < Math.ceil(searchMembers.length / 7) - 1 && (
             <IconButton
               onClick={() => {
                 setCurrentPage(currentPage + 1);

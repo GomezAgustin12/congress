@@ -9,8 +9,6 @@ import {
 import { fetchOneMember } from "../../api";
 import { LinearProgress, Container } from "@material-ui/core";
 
-import { Navbar } from "../index";
-
 const Detailed = () => {
   const { id } = useParams();
   const detailed = useSelector((state) => state.detailed);
@@ -35,10 +33,6 @@ const Detailed = () => {
   const keys = Object.keys(detailed.member);
   return (
     <>
-      <Navbar
-        title={`${detailed.member["First Name"]} ${detailed.member["Middle Name"]} ${detailed.member["Last Name"]}`}
-        view='detailed'
-      />
       <Container>
         {keys.map((key) => (
           <p>

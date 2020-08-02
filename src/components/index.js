@@ -1,3 +1,4 @@
 export { default as Members } from "./members/membersGrid";
-export { default as Navbar } from "./navbar/navbar";
+export { default as Header } from "./header/header";
 export { default as Detailed } from "./detailed/detailed";
+export { default as Footer } from "./footer/footer";
