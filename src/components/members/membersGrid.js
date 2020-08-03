@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { fetchMembers } from "../../api";
+
 import {
   Grid,
   LinearProgress,
@@ -11,11 +11,7 @@ import {
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
 import MemberCard from "./memberCard";
-import {
-  fetchMembersFailure,
-  fetchMembersRequest,
-  fetchMembersSuccess,
-} from "../../redux";
+import { fetchMembersRequest } from "../../redux";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "./style.scss";
